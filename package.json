@@ -9,6 +9,8 @@
     "dev:docker": "docker-compose up --build",
     "dev:docker:stop": "docker-compose down",
     "dev:docker:logs": "docker-compose logs -f",
+    "dev:docker:bg": "docker-compose up -d --build",
+    "docker:restart": "docker-compose restart",
     "install:all": "cd backend && npm install && cd ../frontend && npm install",
     "test:backend": "cd backend && npm test",
     "test:backend:watch": "cd backend && npm run test:watch"

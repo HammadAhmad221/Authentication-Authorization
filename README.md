@@ -128,12 +128,17 @@ npm run dev
 **Best for machines without Node.js** - Apps in Docker, MongoDB Atlas in cloud
 
 ```bash
-# 1. Set MONGODB_URI in root .env file
+# 1. Create root .env file with MongoDB Atlas connection string
 # MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/auth_db
 
 # 2. Start all services
 npm run dev:docker
 # Or: docker-compose up --build
+
+# 3. Access your application
+# Frontend: http://localhost:3000
+# Backend: http://localhost:5000
+# API Docs: http://localhost:5000/api-docs
 ```
 
 **Benefits:**
@@ -143,7 +148,7 @@ npm run dev:docker
 - ✅ Consistent environment
 - ☁️ MongoDB Atlas (cloud database)
 
-📖 See [DOCKER_DEVELOPMENT_GUIDE.md](DOCKER_DEVELOPMENT_GUIDE.md) for Docker development guide.
+📖 See [START_DOCKER_DEVELOPMENT.md](START_DOCKER_DEVELOPMENT.md) for complete Docker setup guide.
 
 ---
 
