@@ -341,7 +341,9 @@ The frontend will run on `http://localhost:3000`
    - View your user information
 
 4. **Test Admin Panel:**
-   - To test admin features, manually update a user's role in MongoDB:
+   - Create an admin user: `cd backend && npm run create-admin`
+   - Login with: `admin@test.com` / `Admin123`
+   - Or manually update a user's role in MongoDB:
    ```javascript
    db.users.updateOne(
      { email: "your-email@example.com" },
@@ -350,7 +352,18 @@ The frontend will run on `http://localhost:3000`
    ```
    - Then access `/admin` route
 
-5. **Test Protected Routes:**
+5. **Test Moderator Dashboard:**
+   - Create a moderator user: `cd backend && npm run create-moderator`
+   - Login with: `moderator@test.com` / `Moderator123`
+   - Or manually update a user's role in MongoDB:
+   ```javascript
+   db.users.updateOne(
+     { email: "your-email@example.com" },
+     { $set: { role: "moderator" } }
+   )
+   ```
+
+6. **Test Protected Routes:**
    - Try accessing `/dashboard` without logging in (should redirect to login)
    - Try accessing `/admin` as a regular user (should show access denied)
 

@@ -43,6 +43,7 @@
     "start": "node server.js",
     "dev": "nodemon --legacy-watch server.js",
     "create-admin": "node scripts/createAdmin.js",
+    "create-moderator": "node scripts/createModerator.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
   }

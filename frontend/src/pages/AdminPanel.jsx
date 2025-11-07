@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import './Dashboard.css';
+import './AdminPanel.css';
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -52,38 +53,60 @@ const AdminPanel = () => {
           </button>
         </div>
 
-        <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
           <button 
             onClick={() => navigate('/dashboard')} 
             className="action-btn"
           >
-            Back to Dashboard
+            ← Back to Dashboard
+          </button>
+          <button 
+            onClick={fetchUsers} 
+            className="action-btn"
+            style={{ background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' }}
+          >
+            🔄 Refresh
           </button>
         </div>
 
-        <div className="user-info">
+        <div className="user-info-section">
           <h2>All Users ({users.length})</h2>
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+            <table className="admin-panel-table">
               <thead>
-                <tr style={{ background: '#f8f9fa', borderBottom: '2px solid #e0e0e0' }}>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Username</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Email</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Role</th>
-                  <th style={{ padding: '12px', textAlign: 'left' }}>Created</th>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Created</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
-                  <tr key={user._id} style={{ borderBottom: '1px solid #e0e0e0' }}>
-                    <td style={{ padding: '12px' }}>{user.username}</td>
-                    <td style={{ padding: '12px' }}>{user.email}</td>
-                    <td style={{ padding: '12px' }}>
-                      <span className="role-badge">{user.role}</span>
+                  <tr key={user._id}>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>
+                      <span 
+                        className="role-badge" 
+                        style={{ 
+                          background: user.role === 'admin' ? '#f5576c' : 
+                                     user.role === 'moderator' ? '#f093fb' : '#667eea',
+                          display: 'inline-block',
+                          padding: '4px 12px',
+                          borderRadius: '20px',
+                          color: 'white',
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        {user.role}
+                      </span>
                     </td>
-                    <td style={{ padding: '12px' }}>
-                      {new Date(user.createdAt).toLocaleDateString()}
-                    </td>
+                    <td>{user.isVerified ? '✅ Verified' : '⏳ Pending'}</td>
+                    <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                   </tr>
                 ))}
               </tbody>

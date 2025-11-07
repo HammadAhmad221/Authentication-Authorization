@@ -1,0 +1,47 @@
+/* Admin Panel Specific Styles */
+.admin-panel-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+}
+
+.admin-panel-table thead {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.admin-panel-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.admin-panel-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #555;
+}
+
+.admin-panel-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.admin-panel-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  .admin-panel-table {
+    font-size: 14px;
+  }
+  
+  .admin-panel-table th,
+  .admin-panel-table td {
+    padding: 8px;
+  }
+}
+
