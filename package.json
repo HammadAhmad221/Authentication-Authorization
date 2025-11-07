@@ -1,0 +1,26 @@
+{
+  "name": "authentication-authorization",
+  "version": "1.0.0",
+  "description": "Full-stack authentication and authorization system",
+  "private": true,
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:docker": "docker-compose up --build",
+    "dev:docker:stop": "docker-compose down",
+    "dev:docker:logs": "docker-compose logs -f",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "test:backend": "cd backend && npm test",
+    "test:backend:watch": "cd backend && npm run test:watch"
+  },
+  "keywords": [
+    "authentication",
+    "authorization",
+    "mern",
+    "docker",
+    "mongodb-atlas"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+

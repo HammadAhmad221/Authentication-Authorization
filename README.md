@@ -93,11 +93,66 @@ Authentication & Authorization/
 └── README.md
 ```
 
+## 🚀 Quick Start - Daily Development
+
+### Daily Workflow (Recommended) ⭐
+
+**Run backend and frontend locally, connect to MongoDB Atlas**
+
+```bash
+# Terminal 1 - Start Backend
+cd backend
+npm run dev
+
+# Terminal 2 - Start Frontend (open new terminal)
+cd frontend
+npm run dev
+```
+
+**Access your application:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
+- API Docs: http://localhost:5000/api-docs
+
+📖 See [DAILY_WORKFLOW.md](DAILY_WORKFLOW.md) for detailed daily workflow guide.
+
+**Benefits:**
+- ⚡ Fast hot reload
+- 🔧 Native debugging tools
+- 🧪 Easy testing
+- ☁️ MongoDB Atlas (no database setup)
+- 🌍 Accessible from anywhere
+
+### Option 2: Docker Development (No Node.js Required)
+
+**Best for machines without Node.js** - Apps in Docker, MongoDB Atlas in cloud
+
+```bash
+# 1. Set MONGODB_URI in root .env file
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/auth_db
+
+# 2. Start all services
+npm run dev:docker
+# Or: docker-compose up --build
+```
+
+**Benefits:**
+- ✅ No Node.js installation needed
+- ✅ Hot reload works automatically
+- ✅ Code changes sync instantly
+- ✅ Consistent environment
+- ☁️ MongoDB Atlas (cloud database)
+
+📖 See [DOCKER_DEVELOPMENT_GUIDE.md](DOCKER_DEVELOPMENT_GUIDE.md) for Docker development guide.
+
+---
+
 ## Installation & Setup
 
 ### Prerequisites
 - Node.js (v16 or higher)
-- MongoDB (local or MongoDB Atlas)
+- MongoDB Atlas account (free tier available) - [Sign up here](https://www.mongodb.com/cloud/atlas)
+- Docker (optional, for full stack testing)
 - npm or yarn
 
 ### Backend Setup
@@ -117,15 +172,29 @@ npm install
 PORT=5000
 NODE_ENV=development
 
-MONGODB_URI=mongodb://localhost:27017/auth_db
+# MongoDB Atlas Connection String
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/auth_db?retryWrites=true&w=majority
 
 JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
-JWT_REFRESH_SECRET=your_super_secret_refresh_key_change_this_in_production
+JWT_REFRESH_SECRET=your_super_secret_refresh_key_change_in_production
 JWT_EXPIRES_IN=15m
 JWT_REFRESH_EXPIRES_IN=7d
 
 FRONTEND_URL=http://localhost:3000
+
+# Email Configuration (optional)
+EMAIL_SERVICE=gmail
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASSWORD=your_app_password
+EMAIL_FROM_NAME=Auth System
 ```
+
+**Getting MongoDB Atlas Connection String:**
+1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Create a free cluster
+3. Click "Connect" → "Connect your application"
+4. Copy the connection string
+5. Replace `<username>` and `<password>` with your database user credentials
 
 **Important**: Change the JWT secrets to strong, random strings in production!
 

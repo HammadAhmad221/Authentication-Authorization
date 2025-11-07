@@ -1,8 +1,18 @@
 import nodemailer from 'nodemailer';
 import logger from './logger.js';
 
+// Check if email credentials are configured
+const hasEmailCredentials = () => {
+  return !!(process.env.EMAIL_USER && process.env.EMAIL_PASSWORD);
+};
+
 // Create transporter
 const createTransporter = () => {
+  // If credentials are not configured, return null
+  if (!hasEmailCredentials()) {
+    return null;
+  }
+
   // For development, use Gmail or other SMTP service
   // For production, use SendGrid, AWS SES, or similar
   if (process.env.NODE_ENV === 'production') {
@@ -30,24 +40,33 @@ const createTransporter = () => {
 
 const transporter = createTransporter();
 
-// Verify transporter
-transporter.verify((error, success) => {
-  if (error) {
-    logger.warn('Email transporter not configured properly:', error.message);
-    logger.warn('Email functionality will be disabled. Set EMAIL_USER and EMAIL_PASSWORD in .env');
-  } else {
-    logger.info('Email transporter ready');
-  }
-});
+// Verify transporter only if it exists
+if (transporter) {
+  transporter.verify((error, success) => {
+    if (error) {
+      logger.warn('Email transporter verification failed:', error.message);
+      logger.warn('Email functionality may not work properly. Check your EMAIL_USER and EMAIL_PASSWORD in .env');
+    } else {
+      logger.info('Email transporter ready and verified');
+    }
+  });
+} else {
+  logger.warn('Email transporter not configured: EMAIL_USER and/or EMAIL_PASSWORD not set');
+  logger.warn('Email functionality will be disabled. Set EMAIL_USER and EMAIL_PASSWORD in .env or docker-compose.yml');
+}
 
 // Send email
 export const sendEmail = async (options) => {
   try {
-    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+    // Check if transporter is available
+    if (!transporter || !hasEmailCredentials()) {
       logger.warn('Email not sent - Email credentials not configured');
       // In development, log the email content instead
       if (process.env.NODE_ENV === 'development') {
-        logger.info('Email would be sent:', options);
+        logger.info('Email would be sent:', {
+          to: options.email,
+          subject: options.subject,
+        });
         return { messageId: 'dev-mode' };
       }
       throw new Error('Email service not configured');
