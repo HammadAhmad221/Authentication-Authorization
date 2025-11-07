@@ -114,7 +114,6 @@ npm run dev
 - Backend API: http://localhost:5000
 - API Docs: http://localhost:5000/api-docs
 
-📖 See [DAILY_WORKFLOW.md](DAILY_WORKFLOW.md) for detailed daily workflow guide.
 
 **Benefits:**
 - ⚡ Fast hot reload
@@ -148,17 +147,24 @@ npm run dev:docker
 - ✅ Consistent environment
 - ☁️ MongoDB Atlas (cloud database)
 
-📖 See [START_DOCKER_DEVELOPMENT.md](START_DOCKER_DEVELOPMENT.md) for complete Docker setup guide.
+**Note:** Create a root `.env` file (same directory as `docker-compose.yml`) with your MongoDB Atlas connection string and other environment variables.
+
 
 ---
 
 ## Installation & Setup
 
 ### Prerequisites
+
+**For Local Development:**
 - Node.js (v16 or higher)
 - MongoDB Atlas account (free tier available) - [Sign up here](https://www.mongodb.com/cloud/atlas)
-- Docker (optional, for full stack testing)
 - npm or yarn
+
+**For Docker Development:**
+- Docker Desktop - [Download here](https://www.docker.com/products/docker-desktop)
+- MongoDB Atlas account (free tier available)
+- No Node.js installation required
 
 ### Backend Setup
 
@@ -348,6 +354,59 @@ The frontend will run on `http://localhost:3000`
    - Try accessing `/dashboard` without logging in (should redirect to login)
    - Try accessing `/admin` as a regular user (should show access denied)
 
+## Docker Development
+
+### Setup with Docker
+
+1. **Create root `.env` file:**
+   ```env
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/auth_db?retryWrites=true&w=majority
+   JWT_SECRET=your_jwt_secret
+   JWT_REFRESH_SECRET=your_refresh_secret
+   EMAIL_USER=your_email@gmail.com
+   EMAIL_PASSWORD=your_app_password
+   ```
+
+2. **Start all services:**
+   ```bash
+   docker-compose up --build
+   ```
+
+3. **View logs:**
+   ```bash
+   # All logs
+   docker-compose logs -f
+   
+   # Backend only
+   docker-compose logs -f backend
+   
+   # Frontend only
+   docker-compose logs -f frontend
+   ```
+
+4. **Stop services:**
+   ```bash
+   docker-compose down
+   ```
+
+**Note:** Hot reload is enabled. Code changes sync automatically without restarting containers.
+
+## Troubleshooting
+
+### MongoDB Connection Error
+- Ensure `.env` file exists in root directory with correct `MONGODB_URI`
+- Verify MongoDB Atlas IP whitelist includes your IP
+- Check connection string format
+
+### Port Already in Use
+- Change ports in `docker-compose.yml` if needed
+- Or stop the process using the port
+
+### Changes Not Reflecting
+- For Docker: Wait 1-2 seconds (polling interval)
+- Hard refresh browser: `Ctrl + Shift + R`
+- Check Docker logs for errors
+
 ## Production Considerations
 
 1. **Environment Variables**
@@ -361,8 +420,6 @@ The frontend will run on `http://localhost:3000`
    - Use secure cookies in production
    - Implement additional rate limiting
    - Add request logging and monitoring
-   - Consider implementing email verification
-   - Add password reset functionality
 
 3. **Database**
    - Use MongoDB Atlas or managed database
@@ -374,6 +431,14 @@ The frontend will run on `http://localhost:3000`
    - Serve static files through a CDN
    - Implement error boundary
    - Add loading states
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
