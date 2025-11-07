@@ -5,8 +5,11 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install dependencies (production only)
+# Using npm install instead of npm ci for better compatibility
+# npm ci requires exact sync between package.json and package-lock.json
+# npm install works even if package-lock.json is missing or slightly out of sync
+RUN npm install --omit=dev
 
 # Copy application code
 COPY . .
